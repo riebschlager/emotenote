@@ -1,0 +1,24 @@
+*,
+*:after,
+*:before {
+    box-sizing: inherit;
+    -webkit-user-drag: none;
+    user-select: none;
+    cursor: none;
+}
+
+*::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+html,
+body {
+    box-sizing: border-box;
+    width: $appWidth;
+    height: $appHeight;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
