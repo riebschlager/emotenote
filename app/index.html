@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="App">
+<html>
 
 <head>
     <meta charset="utf-8">
@@ -7,10 +7,15 @@
     <title></title>
     <link rel="stylesheet" href="./assets/css/main.css">
     <script src="./assets/js/kiosk.js"></script>
-    <script src="../node_modules/angular/angular.js"></script>
+    <script src="../node_modules/clmtrackr/build/clmtrackr.min.js"></script>
+    <script src="../node_modules/clmtrackr/examples/js/emotion_classifier.js"></script>
+    <script src="../node_modules/clmtrackr/examples/js/emotionmodel.js"></script>
+    <script src="../node_modules/clmtrackr/models/model_pca_10_svm.js"></script>
 </head>
 
 <body>
+    <video id="videoel" width="1920" height="1080" preload="auto" loop autoplay></video>
+    <canvas id="overlay" width="1920" height="1080"></canvas>
     <script src="./assets/js/main.js"></script>
 </body>
 
