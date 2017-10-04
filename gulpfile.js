@@ -19,7 +19,7 @@ gulp.task('styles', () => {
 gulp.task('server', () => {
 
     fs.writeFile(path.join(__dirname, 'config/local.json'), JSON.stringify({ debug: true }), { flag: 'wx' }, err => {
-        if (err && err.code === 'EEXIST') {
+        if(err && err.code === 'EEXIST') {
             console.log('local.json already exits');
         } else {
             console.log('Created local.json');
@@ -27,7 +27,7 @@ gulp.task('server', () => {
     });
 
     electronConnect.start(state => {
-        if (state === 'stopped') process.exit();
+        if(state === 'stopped') process.exit();
     });
 
     gulp.watch([

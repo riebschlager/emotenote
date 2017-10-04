@@ -7,15 +7,24 @@
     <title></title>
     <link rel="stylesheet" href="./assets/css/main.css">
     <script src="./assets/js/kiosk.js"></script>
+    <script src="../node_modules/vue/dist/vue.min.js"></script>
     <script src="../node_modules/clmtrackr/build/clmtrackr.min.js"></script>
     <script src="../node_modules/clmtrackr/examples/js/emotion_classifier.js"></script>
     <script src="../node_modules/clmtrackr/examples/js/emotionmodel.js"></script>
-    <script src="../node_modules/clmtrackr/models/model_pca_10_svm.js"></script>
+    <script src="../node_modules/clmtrackr/models/model_pca_20_svm.js"></script>
 </head>
 
 <body>
     <video id="videoel" width="1920" height="1080" preload="auto" loop autoplay></video>
     <canvas id="overlay" width="1920" height="1080"></canvas>
+    <div id="app">
+        <p>Happy: {{emotions.happy}}</p>
+        <p>Sad: {{emotions.sad}}</p>
+        <p>Angry: {{emotions.angry}}</p>
+        <p>Surprised: {{emotions.surprised}}</p>
+        <p>Fear: {{emotions.fear}}</p>
+        <p>Disgusted: {{emotions.disgusted}}</p>
+    </div>
     <script src="./assets/js/main.js"></script>
 </body>
 

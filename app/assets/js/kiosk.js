@@ -1,4 +1,4 @@
-if (typeof module === 'object') {
+if(typeof module === 'object') {
     window.module = module;
     module = undefined;
 }
@@ -21,11 +21,3 @@ document.addEventListener('contextmenu', e => {
     e.preventDefault();
     return false;
 });
-
-navigator.serviceWorker.register('../sw.js', { scope: './' })
-    .then(() => {
-        console.log('Service Worker Registered');
-    })
-    .catch(error => {
-        console.log('Error Registering Service Worker', error);
-    });
