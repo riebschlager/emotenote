@@ -13,9 +13,38 @@ const phaser = new Tone.Phaser().toMaster();
 
 const verb = new Tone.Freeverb().toMaster();
 
-let synthMajor = new Tone.PolySynth(12, Tone.FMSynth, { portamento: 0.5 }).connect(vibrato).connect(phaser).toMaster();
+const distortion = new Tone.Distortion().toMaster();
 
-let synthMinor = new Tone.PolySynth(12, Tone.Synth, { portamento: 0.5 }).connect(vibrato).connect(verb).toMaster();
+let synthMajor = new Tone.PolySynth(16, Tone.AMSynth, { portamento: 0 }).connect(vibrato).toMaster();
+
+let synthMinor = new Tone.PolySynth(16, Tone.DuoSynth, { portamento: 0.5 }).connect(verb).toMaster();
+
+let synthAngry = new Tone.PolySynth(16, Tone.FMSynth, { portamento: 0 }).connect(distortion).connect(vibrato).toMaster();
+
+
+
+function updateTones() {
+    synthMajor.volume.value = map(app.emotions.happy, 0, 1, -20, 0);
+    synthMinor.volume.value = map(1 - app.emotions.happy, 0, 1, -20, 0);
+
+    if(app.emotions.angry > 0.5) {
+        synthAngry.volume.value = map(app.emotions.angry, 0, 1, -20, 0);
+        synthMajor.volume.value = map(app.emotions.happy, 0, 1, -40, -15);
+        synthMinor.volume.value = map(1 - app.emotions.happy, 0, 1, -40, -15);
+    } else {
+        synthAngry.volume.value = map(app.emotions.angry, 0, 1, -100, -15);
+    }
+}
+
+let chordsAngry = [
+    ['A1', 'A2', 'E3'],
+    ['B1', 'B2', 'G3'],
+    ['C1', 'C2', 'G3'],
+    ['D1', 'D2', 'A3'],
+    ['E1', 'E2', 'B3'],
+    ['F1', 'F2', 'C3'],
+    ['G1', 'G2', 'D3']
+];
 
 let chordsMajor = [
     ['A2', 'Cx3', 'E4'],
@@ -44,6 +73,9 @@ window.addEventListener('note-on', e => {
     if(e.detail.electrode < chordsMinor.length) {
         synthMinor.triggerRelease(chordsMinor[e.detail.electrode]);
     }
+    if(e.detail.electrode < chordsAngry.length) {
+        synthAngry.triggerRelease(chordsAngry[e.detail.electrode]);
+    }
 });
 
 window.addEventListener('note-off', e => {
@@ -52,6 +84,9 @@ window.addEventListener('note-off', e => {
     }
     if(e.detail.electrode < chordsMinor.length) {
         synthMinor.triggerAttack(chordsMinor[e.detail.electrode]);
+    }
+    if(e.detail.electrode < chordsAngry.length) {
+        synthAngry.triggerAttack(chordsAngry[e.detail.electrode]);
     }
 });
 
@@ -77,8 +112,8 @@ let ec = new emotionClassifier();
 ec.init(emotionModel);
 let emotionData = ec.getBlank();
 
-pModel.shapeModel.nonRegularizedVectors.push(9);
-pModel.shapeModel.nonRegularizedVectors.push(11);
+// pModel.shapeModel.nonRegularizedVectors.push(9);
+// pModel.shapeModel.nonRegularizedVectors.push(11);
 
 let ctrack = new clm.tracker({ useWebGL: true });
 
@@ -116,7 +151,6 @@ navigator.mediaDevices.getUserMedia({ audio: false, video: { width: 1920, height
 function drawLoop() {
     requestAnimationFrame(drawLoop);
     overlayCC.clearRect(0, 0, vid_width, vid_height);
-    //psrElement.innerHTML = "score :" + ctrack.getScore().toFixed(4);
     let cp = ctrack.getCurrentParameters();
     let er = ec.meanPredict(cp);
 
@@ -128,11 +162,8 @@ function drawLoop() {
         er.forEach(em => {
             if(em.value > 0) {
                 app.emotions[em.emotion] = em.value;
-                synthMajor.volume.value = map(em.value, 0, 1, -40, 0);
-                synthMinor.volume.value = map(1 - em.value, 0, 1, -40, 0);
             }
-        })
+        });
+        updateTones();
     };
 }
-Tone.Transport.bpm.value = 220;
-Tone.Transport.start();
