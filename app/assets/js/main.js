@@ -1,4 +1,19 @@
-var app = new Vue({
+const serialport = require('serialport');
+
+var port = new serialport('/dev/tty.usbmodem1421', {
+    baudRate: 9600
+});
+
+setInterval(() => {
+    let data = port.read(2);
+    if(data) {
+        let condition = data[0] === 48;
+        let electrode = parseInt(data[1].toString(16)) - 30;
+        console.log(condition, electrode);
+    }
+});
+
+const app = new Vue({
     el: '#app',
     data: {
         emotions: {
@@ -47,7 +62,7 @@ navigator.mediaDevices.getUserMedia({ audio: false, video: { width: 1920, height
     }
 
     ctrack.start(vid);
-    drawLoop();
+    // drawLoop();
 }).catch(err => {
     console.log(err);
 });
@@ -56,11 +71,12 @@ function drawLoop() {
     requestAnimationFrame(drawLoop);
     overlayCC.clearRect(0, 0, vid_width, vid_height);
     //psrElement.innerHTML = "score :" + ctrack.getScore().toFixed(4);
-    if(ctrack.getCurrentPosition()) {
-        ctrack.draw(overlay);
-    }
     let cp = ctrack.getCurrentParameters();
     let er = ec.meanPredict(cp);
+
+    if(ctrack.getCurrentPosition()) {
+        ctrack.draw(overlay, cp, 'vertices');
+    }
 
     if(er) {
         er.forEach(em => {
