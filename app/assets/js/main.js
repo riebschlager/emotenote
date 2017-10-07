@@ -1,16 +1,11 @@
-const serialport = require('serialport');
+const touch = require('./assets/js/modules/touch.js');
 
-var port = new serialport('/dev/tty.usbmodem1421', {
-    baudRate: 9600
+window.addEventListener('note-on', e => {
+    console.log('on', e.detail.electrode);
 });
 
-setInterval(() => {
-    let data = port.read(2);
-    if(data) {
-        let condition = data[0] === 48;
-        let electrode = parseInt(data[1].toString(16)) - 30;
-        console.log(condition, electrode);
-    }
+window.addEventListener('note-off', e => {
+    console.log('off', e.detail.electrode);
 });
 
 const app = new Vue({

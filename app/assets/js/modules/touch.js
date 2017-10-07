@@ -1,0 +1,23 @@
+function Touch() {
+
+    const serialport = require('serialport');
+
+    const port = new serialport('/dev/tty.usbmodem1421', {
+        baudRate: 9600
+    });
+
+    setInterval(() => {
+        let data = port.read(2);
+        if(data) {
+            let detail = {
+                condition: data[0] === 48,
+                electrode: parseInt(data[1].toString(16)) - 30
+            };
+            let eventName = detail.condition ? 'note-on' : 'note-off';
+            let event = new CustomEvent(eventName, { detail });
+            window.dispatchEvent(event);
+        }
+    });
+}
+
+module.exports = new Touch();
