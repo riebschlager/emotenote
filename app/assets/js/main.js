@@ -1,11 +1,58 @@
 const touch = require('./assets/js/modules/touch.js');
 
+const map = function(input, oldMin, oldMax, newMin, newMax) {
+    return ((input - oldMin) / (oldMax - oldMin)) * (newMax - newMin) + newMin;
+};
+
+const vibrato = new Tone.Vibrato({
+    frequency: 1,
+    depth: 0.5
+}).toMaster();
+
+const phaser = new Tone.Phaser().toMaster();
+
+const verb = new Tone.Freeverb().toMaster();
+
+let synthMajor = new Tone.PolySynth(12, Tone.FMSynth, { portamento: 0.5 }).connect(vibrato).connect(phaser).toMaster();
+
+let synthMinor = new Tone.PolySynth(12, Tone.Synth, { portamento: 0.5 }).connect(vibrato).connect(verb).toMaster();
+
+let chordsMajor = [
+    ['A2', 'Cx3', 'E4'],
+    ['B2', 'Dx4', 'Fx5'],
+    ['C2', 'E3', 'G4'],
+    ['D2', 'Fx3', 'A4'],
+    ['E2', 'Gx3', 'B4'],
+    ['F2', 'A3', 'C4'],
+    ['G2', 'B3', 'D4']
+];
+
+let chordsMinor = [
+    ['A2', 'C3', 'E4'],
+    ['B2', 'E3', 'G4'],
+    ['C2', 'Eb3', 'G4'],
+    ['D2', 'F3', 'A4'],
+    ['E2', 'G3', 'B4'],
+    ['F2', 'Ab3', 'C4'],
+    ['G2', 'Bb3', 'D4']
+];
+
 window.addEventListener('note-on', e => {
-    console.log('on', e.detail.electrode);
+    if(e.detail.electrode < chordsMajor.length) {
+        synthMajor.triggerRelease(chordsMajor[e.detail.electrode]);
+    }
+    if(e.detail.electrode < chordsMinor.length) {
+        synthMinor.triggerRelease(chordsMinor[e.detail.electrode]);
+    }
 });
 
 window.addEventListener('note-off', e => {
-    console.log('off', e.detail.electrode);
+    if(e.detail.electrode < chordsMajor.length) {
+        synthMajor.triggerAttack(chordsMajor[e.detail.electrode]);
+    }
+    if(e.detail.electrode < chordsMinor.length) {
+        synthMinor.triggerAttack(chordsMinor[e.detail.electrode]);
+    }
 });
 
 const app = new Vue({
@@ -22,12 +69,16 @@ let vid_width = vid.width;
 let vid_height = vid.height;
 let overlay = document.getElementById('overlay');
 let overlayCC = overlay.getContext('2d');
+delete emotionModel['disgusted'];
+delete emotionModel['fear'];
+delete emotionModel['sad'];
+delete emotionModel['surprised'];
 let ec = new emotionClassifier();
 ec.init(emotionModel);
 let emotionData = ec.getBlank();
 
-//pModel.shapeModel.nonRegularizedVectors.push(9);
-//pModel.shapeModel.nonRegularizedVectors.push(11);
+pModel.shapeModel.nonRegularizedVectors.push(9);
+pModel.shapeModel.nonRegularizedVectors.push(11);
 
 let ctrack = new clm.tracker({ useWebGL: true });
 
@@ -57,7 +108,7 @@ navigator.mediaDevices.getUserMedia({ audio: false, video: { width: 1920, height
     }
 
     ctrack.start(vid);
-    // drawLoop();
+    drawLoop();
 }).catch(err => {
     console.log(err);
 });
@@ -77,8 +128,11 @@ function drawLoop() {
         er.forEach(em => {
             if(em.value > 0) {
                 app.emotions[em.emotion] = em.value;
+                synthMajor.volume.value = map(em.value, 0, 1, -40, 0);
+                synthMinor.volume.value = map(1 - em.value, 0, 1, -40, 0);
             }
         })
     };
 }
-
+Tone.Transport.bpm.value = 220;
+Tone.Transport.start();

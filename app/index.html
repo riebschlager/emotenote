@@ -11,12 +11,15 @@
     <script src="../node_modules/clmtrackr/build/clmtrackr.min.js"></script>
     <script src="../node_modules/clmtrackr/examples/js/emotion_classifier.js"></script>
     <script src="../node_modules/clmtrackr/examples/js/emotionmodel.js"></script>
-    <script src="../node_modules/clmtrackr/models/model_pca_20_svm.js"></script>
+    <script src="../node_modules/clmtrackr/models/model_pca_20_mosse.js"></script>
+    <script src="../node_modules/tone/build/Tone.js"></script>
 </head>
 
 <body>
-    <video id="videoel" width="1920" height="1080" preload="auto" loop autoplay></video>
-    <canvas id="overlay" width="1920" height="1080"></canvas>
+    <div style="position:absolute; left: 200px;">
+        <video id="videoel" width="640" height="480" preload="auto" loop autoplay></video>
+        <canvas id="overlay" width="640" height="480"></canvas>
+    </div>
     <div id="app">
         <p>Happy: {{emotions.happy}}</p>
         <p>Sad: {{emotions.sad}}</p>
@@ -26,6 +29,7 @@
         <p>Disgusted: {{emotions.disgusted}}</p>
     </div>
     <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/tone.js"></script>
 </body>
 
 </html>
