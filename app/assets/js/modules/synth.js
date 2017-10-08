@@ -10,9 +10,9 @@ function Synth() {
     };
 
     const synths = {
-        major: new Tone.PolySynth(3, Tone.AMSynth, { portamento: 0 }).connect(effects.vibrato).toMaster(),
-        minor: new Tone.PolySynth(3, Tone.DuoSynth, { portamento: 0.5 }).toMaster(),
-        angry: new Tone.PolySynth(3, Tone.FMSynth, { portamento: 0 }).connect(effects.distortion).toMaster()
+        major: new Tone.PolySynth(8, Tone.AMSynth, { portamento: 0 }).connect(effects.vibrato).toMaster(),
+        minor: new Tone.PolySynth(8, Tone.DuoSynth, { portamento: 0.5 }).toMaster(),
+        angry: new Tone.PolySynth(8, Tone.FMSynth, { portamento: 0 }).connect(effects.distortion).toMaster()
     };
 
     window.addEventListener('note-on', e => {
