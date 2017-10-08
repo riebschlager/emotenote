@@ -76,6 +76,6 @@ function Face() {
         };
     }
 
-}
+};
 
 module.exports = new Face();
