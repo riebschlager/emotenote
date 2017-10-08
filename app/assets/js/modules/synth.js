@@ -16,25 +16,25 @@ function Synth() {
     };
 
     window.addEventListener('note-on', e => {
-        if(e.detail.electrode < chords.major.length) {
-            synths.major.triggerRelease(chords.major[e.detail.electrode]);
+        if(e.detail.electrode <= chords.g.length) {
+            synths.major.triggerRelease(chords.g[e.detail.electrode]);
         }
-        if(e.detail.electrode < chords.minor.length) {
-            synths.minor.triggerRelease(chords.minor[e.detail.electrode]);
+        if(e.detail.electrode <= chords.g.length) {
+            synths.minor.triggerRelease(chords.g[e.detail.electrode]);
         }
-        if(e.detail.electrode < chords.angry.length) {
+        if(e.detail.electrode <= chords.angry.length) {
             synths.angry.triggerRelease(chords.angry[e.detail.electrode]);
         }
     });
 
     window.addEventListener('note-off', e => {
-        if(e.detail.electrode < chords.major.length) {
-            synths.major.triggerAttack(chords.major[e.detail.electrode]);
+        if(e.detail.electrode <= chords.g.length) {
+            synths.major.triggerAttack(chords.g[e.detail.electrode]);
         }
-        if(e.detail.electrode < chords.minor.length) {
-            synths.minor.triggerAttack(chords.minor[e.detail.electrode]);
+        if(e.detail.electrode <= chords.g.length) {
+            synths.minor.triggerAttack(chords.g[e.detail.electrode]);
         }
-        if(e.detail.electrode < chords.angry.length) {
+        if(e.detail.electrode <= chords.angry.length) {
             synths.angry.triggerAttack(chords.angry[e.detail.electrode]);
         }
     });
