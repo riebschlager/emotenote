@@ -16,17 +16,21 @@
 </head>
 
 <body>
+
+    <div id="credit">
+        EmoteNote // Chris Riebschlager // github.com/riebschlager/emotenote
+    </div>
+
+    <div id="app">
+        <div id="backgrounds">
+            <div v-bind:style="{opacity:getOpacity('happy')}" class="bg-happy"></div>
+            <div v-bind:style="{opacity:getOpacity('sad')}" class="bg-sad"></div>
+            <div v-bind:style="{opacity:getOpacity('angry')}" class="bg-angry"></div>
+        </div>
+    </div>
     <div id="camera">
         <video id="videoel" preload="auto" loop autoplay width="1440" height="1080"></video>
         <canvas id="overlay" width="1440" height="1080"></canvas>
-    </div>
-    <div id="app" style="display:none;">
-        <!-- <p>Happy: {{emotions.happy}}</p>
-        <p>Sad: {{emotions.sad}}</p>
-        <p>Angry: {{emotions.angry}}</p>
-        <p>Surprised: {{emotions.surprised}}</p>
-        <p>Fear: {{emotions.fear}}</p>
-        <p>Disgusted: {{emotions.disgusted}}</p> -->
     </div>
     <script src="./assets/js/main.js"></script>
 </body>

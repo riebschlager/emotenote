@@ -44,9 +44,9 @@ function Synth() {
         synths.minor.volume.value = map(1 - emotions.happy, 0, 1, -20, 0);
 
         if(emotions.angry > 0.5) {
-            synths.angry.volume.value = map(emotions.angry, 0, 1, -20, 0);
-            synths.major.volume.value = map(emotions.happy, 0, 1, -40, -15);
-            synths.minor.volume.value = map(1 - emotions.happy, 0, 1, -40, -15);
+            synths.angry.volume.value = map(emotions.angry, 0.5, 1, -20, 0);
+            synths.major.volume.value = map(emotions.happy, 0, 1, -20, -5);
+            synths.minor.volume.value = map(1 - emotions.happy, 0, 1, -20, -5);
         } else {
             synths.angry.volume.value = map(emotions.angry, 0, 1, -100, -15);
         }

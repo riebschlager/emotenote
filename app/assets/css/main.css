@@ -411,6 +411,40 @@ body {
   padding: 0;
   background-color: #000; }
 
+#credit {
+  width: 1920px;
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.875);
+  color: #333;
+  bottom: 0;
+  text-align: center;
+  font-family: helvetica, sans-serif;
+  font-size: 24px;
+  z-index: 200;
+  position: absolute;
+  padding: 10px; }
+
+#backgrounds,
+#backgrounds > div {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1920px;
+  height: 1080px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 100;
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 10%, transparent, #000 90%, #000); }
+
+.bg-sad {
+  background-image: url("../images/bg-sad.jpg"); }
+
+.bg-happy {
+  background-image: url("../images/bg-happy.jpg"); }
+
+.bg-angry {
+  background-image: url("../images/bg-angry.jpg"); }
+
 #overlay {
   position: absolute;
   top: 0px;
@@ -420,12 +454,6 @@ body {
   position: absolute;
   top: 0px;
   left: 0px; }
-
-#app {
-  width: 400px;
-  height: 300px;
-  position: absolute;
-  background-color: rgba(255, 255, 255, 0.875); }
 
 #camera {
   width: 1440px;
