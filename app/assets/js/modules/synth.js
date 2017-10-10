@@ -40,13 +40,15 @@ function Synth() {
     });
 
     this.updateTones = function(emotions) {
-        synths.major.volume.value = map(emotions.happy, 0, 1, -20, 10);
-        synths.minor.volume.value = map(1 - emotions.happy, 0, 1, -20, 0);
+        let maxVolume = -10;
+        let minVolume = -20;
+        synths.major.volume.value = map(emotions.happy, 0, 1, minVolume, maxVolume);
+        synths.minor.volume.value = map(1 - emotions.happy, 0, 1, minVolume, maxVolume);
 
-        if(emotions.angry > 0.5) {
-            synths.angry.volume.value = map(emotions.angry, 0.5, 1, -20, 0);
-            synths.major.volume.value = map(emotions.happy, 0, 1, -20, -5);
-            synths.minor.volume.value = map(1 - emotions.happy, 0, 1, -20, -5);
+        if(emotions.angry > 0.7) {
+            synths.angry.volume.value = map(emotions.angry, 0.5, 1, minVolume, maxVolume);
+            synths.major.volume.value = map(emotions.happy, 0, 1, minVolume - 50, maxVolume - 10);
+            synths.minor.volume.value = map(1 - emotions.happy, 0, 1, minVolume - 50, maxVolume - 10);
         } else {
             synths.angry.volume.value = map(emotions.angry, 0, 1, -100, -15);
         }
