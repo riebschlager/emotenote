@@ -1,6 +1,6 @@
-# DI Electron Boilerplate
+# EmoteNote
 
-A set of reasonable defaults for new Dimensional Innovations kiosk projects.
+A face tracking musical instrument. Created for the AAFKC Creative Tech happy hour.
 
 ## Folder Structure
 
