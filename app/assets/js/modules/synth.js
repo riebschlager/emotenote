@@ -12,7 +12,7 @@ function Synth() {
 
     const synths = {
         major: new Tone.PolySynth(12, Tone.FMSyth).connect(effects.reverb).toMaster(),
-        minor: new Tone.PolySynth(12, Tone.DuoSynth).connect(effects.chorus).toMaster(),
+        minor: new Tone.PolySynth(12, Tone.DuoSynth, { portamento: 0.4 }).connect(effects.chorus).toMaster(),
         angry: new Tone.PolySynth(12, Tone.FMSynth).connect(effects.distortion).connect(effects.reverb).toMaster()
     };
 
