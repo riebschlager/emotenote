@@ -5,6 +5,9 @@
     "main": "index.js",
     "author": "Dimensional Innovations",
     "license": "ISC",
+    "scripts": {
+        "start": "./node_modules/.bin/electron ."
+    },
     "dependencies": {
         "clmtrackr": "^1.1.2",
         "config": "^1.26.2",
