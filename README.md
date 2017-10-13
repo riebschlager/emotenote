@@ -2,6 +2,9 @@
 
 A face tracking musical instrument. Created for the AAFKC Creative Tech happy hour.
 
+![Angry](https://i.imgur.com/V55liri.png)
+![Happy](https://i.imgur.com/89hUbVL.png)
+
 ## Folder Structure
 
 `app/assets/css` - Compiled CSS files
